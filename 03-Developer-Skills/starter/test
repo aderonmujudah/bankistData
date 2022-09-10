@@ -1,0 +1,83 @@
+function getDivisorAndRemainder(dividend, divisor) {
+  const remainder = dividend % divisor;
+  const quotient = parseInt(dividend / divisor);
+  return [quotient, remainder];
+}
+
+/**
+ * Given customerId find the plate number
+ *
+ * @param {Number} customerId
+ * @returns {String} `aaa001`
+ */
+function findPlateNumber(customerId) {
+  // Check that the number is ot greater than 17m
+  if (customerId > 17558423) {
+    throw Error('customerId cannot be greater than 17,558,423');
+  }
+  // 999th number -> aaa999
+  // 1000th number -> baa001
+  // 1999th number -> caa001
+  // Divide the customerId by 999 and get the quotient and the remainder
+  let [alp_count, cus_rem] = getDivisorAndRemainder(customerId, 999);
+  cus_rem = cus_rem + 1;
+
+  // cus_rem = remainder
+  // stringify the number and if the number of characters are less than 3, add zeroes till the number of characters is 3
+  let numPart = cus_rem.toString();
+  if (numPart.length === 1) {
+    numPart = `00${numPart}`;
+  } else if (numPart === 2) {
+    numPart = `0${numPart}`;
+  }
+
+  // Define an array of alphabets
+  const alphabets = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+  ];
+
+  // alp_count = divisor
+  // 25 -> zaa 25 / 26 0 rem 25
+  // 26 -> aba 26 / 26 1 rem 0
+  // 27 -> bba 27 / 26 1 rem 1
+  // 40 -> oba    40 / 26 1 rem 14
+  // Divide alp_count by 26 get the remainder get the divisor
+  const [alp_count_2, alp_1] = getDivisorAndRemainder(alp_count, 26);
+  const [alp_3, alp_2] = getDivisorAndRemainder(alp_count_2, 26);
+  // alp_1 = alphaets[remainder]
+  // alp_count_2 = divisor
+  // Divide alp_count by 26 get the remainder get the divisor
+  // alp_2 = alphabets[remainder]
+  // alp_3 = quotient
+
+  // Concatenate number string and alphabets
+  return `${alphabets[alp_1]}${alphabets[alp_2]}${alphabets[alp_3]}${numPart}`;
+}
+
+console.log(findPlateNumber(1000), 'baa002');
+console.log(findPlateNumber(17558423), 'zzz999');
