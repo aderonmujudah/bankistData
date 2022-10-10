@@ -161,6 +161,9 @@ nav {
 .movements__type--withdrawal {
   background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
+.movements__type--loan {
+  background-image: linear-gradient(to top left, #4c0dc1, #ff585f);
+}
 
 .movements__value {
   font-size: 1.7rem;
